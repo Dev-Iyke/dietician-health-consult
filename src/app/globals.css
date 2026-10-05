@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --burgundy: #830b38;
@@ -6,15 +8,6 @@
   --cream: #fcf8f4;
   --peach: #f4e9e1;
   --ink: #2d2524;
-}
-
-@theme inline {
-  --color-burgundy: var(--burgundy);
-  --color-burgundy-dark: var(--burgundy-dark);
-  --color-cream: var(--cream);
-  --color-peach: var(--peach);
-  --color-ink: var(--ink);
-  --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 html {
