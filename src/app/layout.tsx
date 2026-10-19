@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Atkinson_Hyperlegible } from "next/font/google";
+import { Atkinson_Hyperlegible, DM_Serif_Display } from "next/font/google";
 import type { PropsWithChildren } from "react";
 import { MotionConfig } from "framer-motion";
 import "./globals.css";
@@ -37,9 +37,17 @@ const atkinson = Atkinson_Hyperlegible({
   fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
+const dmSerifDisplay = DM_Serif_Display({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  fallback: ["Georgia", "Times New Roman", "serif"],
+});
+
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en" className={`${atkinson.variable}`}>
+    <html lang="en" className={`${atkinson.variable} ${dmSerifDisplay.variable}`}>
       <body className={`font-atkinson`}>
         <MotionConfig reducedMotion="user">{children}</MotionConfig>
       </body>

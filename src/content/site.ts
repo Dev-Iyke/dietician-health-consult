@@ -27,10 +27,14 @@ export const siteContent = {
     bio: "Grace is a registered dietitian who works with people from diverse cultural backgrounds to make sense of nutrition and chronic health conditions. Her guidance is grounded in evidence and shaped around each person’s goals, routines, culture, and the foods they love.",
   },
   hero: {
-    eyebrow: "Nutrition care that meets you where you are",
-    title: "Better health with foods you love.",
+    eyebrow: "Nutrition care, shaped around you",
+    title: "Better health,",
+    titleAccent: "with the foods you love.",
     description:
-      "Personalized nutrition support for chronic health conditions, with practical guidance you can make your own—without giving up the foods and traditions that matter to you.",
+      "Support for diabetes and other chronic health concerns, shaped around your culture, routines, preferences, and goals—not rigid food rules.",
+    imageAlt: "Grace Kanu, Registered Dietitian, smiling in her office",
+    primaryCta: "Book a free discovery call",
+    secondaryCta: "Explore nutrition support",
   },
   conditions: [
     "Type 1, type 2 & gestational diabetes",
