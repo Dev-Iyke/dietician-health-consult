@@ -12,6 +12,8 @@ const config: Config = {
         ink: "var(--ink)",
       },
       fontFamily: {
+        atkinson: ["var(--font-atkinson)", "Georgia", '"Times New Roman"', "serif"],
+        display: ["var(--font-display)", "Georgia", '"Times New Roman"', "serif"],
         serif: ["Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
       },
     },
