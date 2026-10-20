@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
+import { Services } from "@/components/Services";
 
 export default function HomePage() {
   return (
@@ -7,6 +8,7 @@ export default function HomePage() {
       <Navbar />
       <main id="top" className="min-h-screen bg-cream">
         <Hero />
+        <Services />
       </main>
     </>
   );

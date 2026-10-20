@@ -46,6 +46,38 @@ export const siteContent = {
     "PCOS",
     "Menopause & metabolic health",
   ],
+  services: {
+    eyebrow: "How I can help",
+    title: "Nutrition support for the health concerns you’re navigating",
+    description:
+      "Get clear, practical nutrition guidance for chronic health concerns and changing needs—shaped around your goals, culture, routines, and the foods you enjoy.",
+    areas: [
+      {
+        title: "Diabetes & blood sugar",
+        description:
+          "Personalized support for making sense of nutrition and blood sugar in everyday life.",
+        concerns: ["Type 1 diabetes", "Type 2 diabetes", "Gestational diabetes"],
+      },
+      {
+        title: "Heart health",
+        description:
+          "Evidence-informed guidance for nutrition habits related to heart health.",
+        concerns: ["High blood pressure", "High cholesterol"],
+      },
+      {
+        title: "Liver & kidney health",
+        description:
+          "Nutrition care tailored to your needs when navigating liver or kidney conditions.",
+        concerns: ["Fatty liver disease", "Chronic kidney disease"],
+      },
+      {
+        title: "Weight & women’s metabolic health",
+        description:
+          "Support that considers your health, preferences, and life stage—not one-size-fits-all rules.",
+        concerns: ["Weight management", "PCOS", "Menopause & metabolic health"],
+      },
+    ],
+  },
   approach: [
     {
       number: "01",

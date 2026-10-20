@@ -101,7 +101,7 @@ export function Hero() {
                 <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-blush text-burgundy">
                   <Leaf aria-hidden="true" size={18} strokeWidth={2} />
                 </span>
-                <span className="text-xs leading-5 text-burgundy-dark font-display font-medium">
+                <span className="text-xs leading-5 text-burgundy-dark font-display">
                   Care shaped around your life
                 </span>
               </div>
