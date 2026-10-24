@@ -36,7 +36,7 @@ export function About() {
 
           <FadeIn>
             <div className="mx-auto max-w-[650px]">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-burgundy sm:text-sm">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-burgundy sm:text-sm">
                 {siteContent.about.eyebrow}
               </p>
               <h2
