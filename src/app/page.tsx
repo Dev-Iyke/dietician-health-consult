@@ -5,6 +5,7 @@ import { About } from "@/components/About";
 import { Packages } from "@/components/Packages";
 import { OneOffAppointments } from "@/components/OneOffAppointments";
 import { FAQ } from "@/components/FAQ";
+import { Footer } from "@/components/Footer";
 
 export default function HomePage() {
   return (
@@ -18,6 +19,7 @@ export default function HomePage() {
         <OneOffAppointments />
         <FAQ />
       </main>
+      <Footer />
     </>
   );
 }
