@@ -53,7 +53,7 @@ export function Services() {
     <section
       id="services"
       aria-labelledby="services-title"
-      className="scroll-mt-24 border-t border-burgundy/10 bg-white"
+      className="scroll-mt-20 border-t border-burgundy/10 bg-white"
     >
       <div className="mx-auto w-[calc(100%-2rem)] max-w-[1320px] py-16 sm:w-[calc(100%-4rem)] sm:py-20 lg:py-24">
         <FadeIn>

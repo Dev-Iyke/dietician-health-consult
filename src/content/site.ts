@@ -26,6 +26,12 @@ export const siteContent = {
     experience: "Over 8 years of experience",
     bio: "Grace is a registered dietitian who works with people from diverse cultural backgrounds to make sense of nutrition and chronic health conditions. Her guidance is grounded in evidence and shaped around each person’s goals, routines, culture, and the foods they love.",
   },
+  about: {
+    eyebrow: "Meet Grace",
+    title: "Guidance that fits your health, culture, and everyday life.",
+    imageAlt: "Grace Kanu smiling among flowering shrubs in a garden",
+    approachTitle: "What working together can look like",
+  },
   hero: {
     eyebrow: "Nutrition care, shaped around you",
     title: "Better health,",
