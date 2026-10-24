@@ -2,6 +2,8 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Services } from "@/components/Services";
 import { About } from "@/components/About";
+import { Packages } from "@/components/Packages";
+import { OneOffAppointments } from "@/components/OneOffAppointments";
 
 export default function HomePage() {
   return (
@@ -11,6 +13,8 @@ export default function HomePage() {
         <Hero />
         <Services />
         <About />
+        <Packages />
+        <OneOffAppointments />
       </main>
     </>
   );
