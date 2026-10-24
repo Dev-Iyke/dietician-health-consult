@@ -205,6 +205,12 @@ export const siteContent = {
     description:
       "A lower-cost, 45-minute option for returning clients whose package has ended and who need brief follow-up support. This is not an initial appointment; it is reserved for people who have worked with Grace before.",
   },
+  faqSection: {
+    eyebrow: "A few helpful details",
+    title: "Questions before you get started?",
+    description:
+      "Find answers about nutrition support, choosing an appointment, and booking through the Colib client portal.",
+  },
   faqs: [
     {
       question: "What kinds of concerns can Grace help with?",
@@ -249,7 +255,7 @@ export const siteContent = {
     {
       question: "How can I contact Grace?",
       answer:
-        "Email info@dietitianhealthconsult.com or connect through the social links on this page. A business phone number will be added if Grace chooses to provide one.",
+        "Email info@dietitianhealthconsult.com or connect through the social links on this page.",
     },
   ],
 } as const;

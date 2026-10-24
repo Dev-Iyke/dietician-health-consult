@@ -4,6 +4,7 @@ import { Services } from "@/components/Services";
 import { About } from "@/components/About";
 import { Packages } from "@/components/Packages";
 import { OneOffAppointments } from "@/components/OneOffAppointments";
+import { FAQ } from "@/components/FAQ";
 
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
         <About />
         <Packages />
         <OneOffAppointments />
+        <FAQ />
       </main>
     </>
   );
