@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Activity,
   HeartPulse,
@@ -11,6 +12,20 @@ import { FadeIn } from "@/components/fade-in";
 import { siteContent } from "@/content/site";
 
 const areaIcons: LucideIcon[] = [Activity, HeartPulse, Leaf, Sparkles];
+const serviceImages = [
+  {
+    src: "/images/stock/balanced-home-meal.webp",
+    alt: "Colorful home-cooked meals with vegetables, greens, and a variety of ingredients",
+  },
+  {
+    src: "/images/stock/registered-dietitian-counselling.webp",
+    alt: "A dietitian having a warm, collaborative nutrition conversation with a client",
+  },
+  {
+    src: "/images/stock/meals-and-notebook.webp",
+    alt: "An open meal-planning notebook beside fresh salad and ingredients",
+  },
+];
 const areaLayouts = [
   "lg:col-span-7",
   "lg:col-span-5",
@@ -83,7 +98,26 @@ export function Services() {
           </div>
         </FadeIn>
 
-        <div className="mt-10 grid gap-4 sm:mt-14 md:grid-cols-2 md:gap-5 lg:grid-cols-12">
+        <FadeIn>
+          <div className="mx-auto mt-10 grid max-w-[1040px] grid-cols-2 gap-3 sm:mt-12 sm:gap-4 md:grid-cols-3">
+            {serviceImages.map((image, index) => (
+              <figure
+                key={image.src}
+                className={`relative overflow-hidden rounded-lg bg-sand shadow-[0_18px_42px_-32px_rgba(75,20,43,0.45)] sm:rounded-xl ${index === 0 ? "col-span-2 aspect-[2/1] md:col-span-1 md:aspect-[4/3]" : "aspect-[4/3]"}`}
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="(min-width: 768px) 330px, (min-width: 640px) 44vw, 90vw"
+                  className="object-cover object-center"
+                />
+              </figure>
+            ))}
+          </div>
+        </FadeIn>
+
+        <div className="mt-8 grid gap-4 sm:mt-10 md:grid-cols-2 md:gap-5 lg:grid-cols-12">
           {siteContent.services.areas.map((area, index) => {
             const Icon = areaIcons[index];
             const theme = areaThemes[index];
