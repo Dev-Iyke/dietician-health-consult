@@ -26,6 +26,12 @@ export const siteContent = {
     experience: "Over 8 years of experience",
     bio: "Grace is a registered dietitian who works with people from diverse cultural backgrounds to make sense of nutrition and chronic health conditions. Her guidance is grounded in evidence and shaped around each person’s goals, routines, culture, and the foods they love.",
   },
+  about: {
+    eyebrow: "Meet Grace",
+    title: "Guidance that fits your health, culture, and everyday life.",
+    imageAlt: "Grace Kanu smiling among flowering shrubs in a garden",
+    approachTitle: "What working together can look like",
+  },
   hero: {
     eyebrow: "Nutrition care, shaped around you",
     title: "Better health,",
@@ -98,6 +104,13 @@ export const siteContent = {
         "Choose sustainable next steps and get support as you put them into practice.",
     },
   ],
+  packageSection: {
+    eyebrow: "Nutrition support programs",
+    title: "Find the level of support that fits your goals.",
+    description:
+      "Choose from a focused two-week start to consistent support over two months. Each program combines personalized nutrition guidance with practical next steps.",
+    bookingNote: "Booking and payment are completed through the Colib client portal.",
+  },
   packages: [
     {
       name: "Starter",
@@ -152,6 +165,12 @@ export const siteContent = {
       ],
     },
   ],
+  oneOffSection: {
+    eyebrow: "One-time nutrition support",
+    title: "Looking for one-time nutrition support?",
+    description:
+      "Choose a focused consultation or personalized 7-day meal plan for practical support without committing to a multi-week program.",
+  },
   oneOffServices: [
     {
       name: "Initial nutrition consultation",
@@ -171,7 +190,7 @@ export const siteContent = {
     },
     {
       name: "Personalized 7-day meal plan",
-      duration: "Plan delivered through the booking portal",
+      duration: "Documentation",
       price: "$120",
       description:
         "A personalized meal-plan option for people who want a plan without booking a consultation.",
@@ -182,8 +201,15 @@ export const siteContent = {
     name: "Quick check-in",
     duration: "45 minutes",
     price: "$95",
+    eligibility: "Available to previous clients only",
     description:
-      "A brief check-in for returning clients whose package has ended and who have a question or need a little follow-up support.",
+      "A lower-cost, 45-minute option for returning clients whose package has ended and who need brief follow-up support. This is not an initial appointment; it is reserved for people who have worked with Grace before.",
+  },
+  faqSection: {
+    eyebrow: "A few helpful details",
+    title: "Questions before you get started?",
+    description:
+      "Find answers about nutrition support, choosing an appointment, and booking through the Colib client portal.",
   },
   faqs: [
     {
@@ -229,7 +255,7 @@ export const siteContent = {
     {
       question: "How can I contact Grace?",
       answer:
-        "Email info@dietitianhealthconsult.com or connect through the social links on this page. A business phone number will be added if Grace chooses to provide one.",
+        "Email info@dietitianhealthconsult.com or connect through the social links on this page.",
     },
   ],
 } as const;
