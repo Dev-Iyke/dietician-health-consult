@@ -6,7 +6,7 @@ import { siteContent } from "@/content/site";
 
 const footerLinks = [
   { label: "Home", href: "#top" },
-  { label: "About Grace", href: "#about" },
+  { label: "About the dietitian", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "Packages", href: "#packages" },
   { label: "One-off appointments", href: "#one-off-appointments" },
@@ -112,7 +112,7 @@ export function Footer() {
                   Ready to book?
                 </h3>
                 <p className="mt-2 max-w-[260px] text-sm leading-6 text-stone-700">
-                  Scan the code to open Grace’s secure booking portal.
+                  Scan the code to open the secure DHC booking portal.
                 </p>
               </div>
               <ArrowUpRight aria-hidden="true" className="mt-1 shrink-0 text-burgundy" size={20} />
@@ -157,7 +157,7 @@ export function Footer() {
             href={`mailto:${siteContent.contact.email}`}
             className="w-fit transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
           >
-            Contact Grace
+            Contact DHC
           </a>
         </div>
       </div>

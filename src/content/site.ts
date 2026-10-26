@@ -27,7 +27,7 @@ export const siteContent = {
     bio: "Grace is a registered dietitian who works with people from diverse cultural backgrounds to make sense of nutrition and chronic health conditions. Her guidance is grounded in evidence and shaped around each person’s goals, routines, culture, and the foods they love.",
   },
   about: {
-    eyebrow: "Meet Grace",
+    eyebrow: "Your dietitian",
     title: "Guidance that fits your health, culture, and everyday life.",
     imageAlt: "Grace Kanu smiling among flowering shrubs in a garden",
     approachTitle: "What working together can look like",
@@ -39,7 +39,7 @@ export const siteContent = {
     description:
       "Support for diabetes and other chronic health concerns, shaped around your culture, routines, preferences, and goals—not rigid food rules.",
     imageAlt: "Grace Kanu, Registered Dietitian, smiling in her office",
-    primaryCta: "Book a free discovery call",
+    primaryCta: "Request a free discovery call",
     secondaryCta: "Explore nutrition support",
   },
   conditions: [
@@ -171,6 +171,23 @@ export const siteContent = {
     description:
       "Choose a focused consultation or personalized 7-day meal plan for practical support without committing to a multi-week program.",
   },
+  discoveryCall: {
+    eyebrow: "A free 15-minute introduction",
+    title: "Let’s find a helpful place to start.",
+    description:
+      "Share a few contact details and what you’d like to learn about. Dietitian Health Consult will be in touch to arrange a free discovery call.",
+    topics: [
+      "Packages and fees",
+      "What to expect at an initial consultation",
+      "Appointment format and availability",
+      "General questions about nutrition services",
+    ],
+    callbackWindows: [
+      { value: "sat_2_4", label: "Saturday, 2-4 p.m. (Edmonton time)" },
+      { value: "sat_7_9", label: "Saturday, 7-9 p.m. (Edmonton time)" },
+      { value: "sun_5_7", label: "Sunday, 5-7 p.m. (Edmonton time)" },
+    ],
+  },
   oneOffServices: [
     {
       name: "Initial nutrition consultation",
@@ -213,9 +230,9 @@ export const siteContent = {
   },
   faqs: [
     {
-      question: "What kinds of concerns can Grace help with?",
+      question: "What kinds of concerns can Dietitian Health Consult support?",
       answer:
-        "Grace supports people navigating type 1, type 2, and gestational diabetes, weight management, high blood pressure, high cholesterol, fatty liver disease, chronic kidney disease, PCOS, and metabolic health during menopause.",
+        "Dietitian Health Consult offers nutrition support for people navigating type 1, type 2, and gestational diabetes, weight management, high blood pressure, high cholesterol, fatty liver disease, chronic kidney disease, PCOS, and metabolic health during menopause.",
     },
     {
       question: "Do I need to choose a package?",
@@ -253,9 +270,9 @@ export const siteContent = {
         "Please use the Colib booking and client portal for forms or health information. This website does not collect health information.",
     },
     {
-      question: "How can I contact Grace?",
+      question: "How can I contact the practice?",
       answer:
-        "Email info@dietitianhealthconsult.com or connect through the social links on this page.",
+        "Email Dietitian Health Consult at info@dietitianhealthconsult.com or connect through the social links on this page.",
     },
   ],
 } as const;

@@ -2,6 +2,12 @@
 
 Marketing site for Dietitian Health Consult, built with Next.js, TypeScript, Tailwind CSS, and Framer Motion.
 
+## Free discovery-call requests
+
+The discovery-call form is a static frontend that posts to `public/api/discovery-request.php`. During `next build`, that PHP handler is copied into `out/api/` and uploaded with the rest of the static export. GreenGeeks must execute PHP for the endpoint to send requests; it emails submissions to `info@dietitianhealthconsult.com` and does not save them in a website database.
+
+The PHP handler uses GreenGeeks' configured PHP mail transport. Before announcing the form, deploy it and submit a test request to confirm the message reaches the business inbox (and its spam folder). PHP is not available in the local development environment, so endpoint execution and real email delivery must be verified on GreenGeeks.
+
 ## Local development
 
 ```bash

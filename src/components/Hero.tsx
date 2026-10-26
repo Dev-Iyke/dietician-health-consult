@@ -49,16 +49,14 @@ export function Hero() {
 
               <div className="mt-8 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-7">
                 <Button
-                  href={siteContent.bookingUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                  href="#discovery-call"
                   icon={<ArrowUpRight aria-hidden="true" size={17} />}
                 >
                   {siteContent.hero.primaryCta}
                 </Button>
                 <Link
                   href="#services"
-                  className="group inline-flex items-center gap-2 py-2 text-sm font-medium text-burgundy-dark transition-colors duration-200 hover:text-burgundy focus-visible:text-burgundy"
+                  className="group hidden sm:inline-flex items-center gap-2 py-2 text-sm font-medium text-burgundy-dark transition-colors duration-200 hover:text-burgundy focus-visible:text-burgundy"
                 >
                   {siteContent.hero.secondaryCta}
                   <ArrowDownRight
@@ -111,7 +109,7 @@ export function Hero() {
 
         <FadeIn>
           <dl
-            aria-label="Grace’s qualifications and experience"
+            aria-label="Dietitian qualifications and experience"
             className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-4"
           >
             <div className="flex min-h-[92px] items-center gap-4 border border-burgundy/10 bg-white/70 p-4 shadow-[0_14px_35px_-30px_rgba(75,20,43,0.6)] md:px-5">
