@@ -20,6 +20,18 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Set up PHP and Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+
+      - name: Check PHP handler syntax
+        run: php -l public/api/discovery-request.php
+
+      - name: Install PHP mailer dependency
+        run: composer install --working-dir=public/api --no-dev --prefer-dist --no-interaction --optimize-autoloader
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
