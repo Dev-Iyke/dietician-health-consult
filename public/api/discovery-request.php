@@ -1,8 +1,15 @@
 <?php
 declare(strict_types=1);
 
+use PHPMailer\PHPMailer\PHPMailer;
+
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, max-age=0');
+
+$mailerAutoload = __DIR__ . '/vendor/autoload.php';
+if (is_file($mailerAutoload)) {
+    require_once $mailerAutoload;
+}
 
 function respond(int $status, array $payload): void
 {
@@ -90,7 +97,7 @@ if (!isset($callbackWindows[$callbackWindow]) || !$consent) {
 $topicText = count($topics) > 0 ? implode("\n- ", $topics) : 'No topics selected';
 $contactMethod = $region === 'canada' ? 'Phone call (Canadian number)' : 'WhatsApp message or call';
 $body = implode("\n", [
-    'New free discovery-call request — Dietitian Health Consult',
+    'New free discovery-call request - Dietitian Health Consult',
     '',
     'Name: ' . $name,
     'Phone: ' . $phone,
@@ -103,16 +110,35 @@ $body = implode("\n", [
     'The visitor confirmed the collection notice and did not submit medical details.',
 ]);
 
-$recipient = 'info@dietitianhealthconsult.com';
-$subject = 'New free discovery-call request';
-$headers = [
-    'From: Dietitian Health Consult <no-reply@dietitianhealthconsult.com>',
-    'MIME-Version: 1.0',
-    'Content-Type: text/plain; charset=UTF-8',
-    'Content-Transfer-Encoding: 8bit',
-];
+$configPath = dirname(__DIR__, 2) . '/dhc-mail-config.php';
+if (!class_exists(PHPMailer::class) || !is_readable($configPath)) {
+    error_log('DHC discovery request: mailer dependency or private mail configuration is unavailable.');
+    respond(503, ['error' => 'The request could not be delivered.']);
+}
 
-if (!mail($recipient, $subject, $body, implode("\r\n", $headers))) {
+$mailConfig = require $configPath;
+if (!is_array($mailConfig) || empty($mailConfig['username']) || empty($mailConfig['password'])) {
+    error_log('DHC discovery request: private mail configuration is incomplete.');
+    respond(503, ['error' => 'The request could not be delivered.']);
+}
+
+try {
+    $mailer = new PHPMailer(true);
+    $mailer->isSMTP();
+    $mailer->Host = (string) ($mailConfig['host'] ?? 'mail.dietitianhealthconsult.com');
+    $mailer->SMTPAuth = true;
+    $mailer->Username = (string) $mailConfig['username'];
+    $mailer->Password = (string) $mailConfig['password'];
+    $mailer->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mailer->Port = (int) ($mailConfig['port'] ?? 465);
+    $mailer->CharSet = 'UTF-8';
+    $mailer->setFrom((string) $mailConfig['username'], 'Dietitian Health Consult');
+    $mailer->addAddress('info@dietitianhealthconsult.com');
+    $mailer->Subject = 'New free discovery-call request';
+    $mailer->Body = $body;
+    $mailer->send();
+} catch (Throwable $error) {
+    error_log('DHC discovery request: authenticated SMTP send failed.');
     respond(503, ['error' => 'The request could not be delivered.']);
 }
 

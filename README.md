@@ -6,7 +6,19 @@ Marketing site for Dietitian Health Consult, built with Next.js, TypeScript, Tai
 
 The discovery-call form is a static frontend that posts to `public/api/discovery-request.php`. During `next build`, that PHP handler is copied into `out/api/` and uploaded with the rest of the static export. GreenGeeks must execute PHP for the endpoint to send requests; it emails submissions to `info@dietitianhealthconsult.com` and does not save them in a website database.
 
-The PHP handler uses GreenGeeks' configured PHP mail transport. Before announcing the form, deploy it and submit a test request to confirm the message reaches the business inbox (and its spam folder). PHP is not available in the local development environment, so endpoint execution and real email delivery must be verified on GreenGeeks.
+The PHP handler sends through GreenGeeks SMTP using PHPMailer and authenticated SSL/TLS (port 465). It expects a private PHP configuration file at `/home/dieti2/dhc-mail-config.php`, outside `public_html`; do not commit or upload mailbox credentials through GitHub. Create that file in cPanel File Manager with:
+
+```php
+<?php
+return [
+    'host' => 'mail.dietitianhealthconsult.com',
+    'port' => 465,
+    'username' => 'info@dietitianhealthconsult.com',
+    'password' => 'SET-THE-MAILBOX-PASSWORD-HERE',
+];
+```
+
+Restrict the file permissions to the account owner (typically `0600`). After deploying, submit a test request and verify it appears in cPanel **Track Delivery** and reaches the business inbox (including spam). The endpoint returns success only after authenticated SMTP accepts the message. PHP is not available in the local development environment, so endpoint execution and real email delivery must be verified on GreenGeeks.
 
 ## Local development
 
