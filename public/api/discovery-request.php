@@ -47,7 +47,7 @@ if (!is_array($data)) {
 }
 
 // Quietly accept honeypot submissions without sending email.
-if (trim((string) ($data['companyWebsite'] ?? '')) !== '') {
+if (trim((string) ($data['validationField'] ?? '')) !== '') {
     respond(200, ['ok' => true]);
 }
 
