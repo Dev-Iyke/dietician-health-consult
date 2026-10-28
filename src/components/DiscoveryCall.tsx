@@ -377,15 +377,14 @@ export function DiscoveryCall() {
               <div aria-live="polite" className="min-h-6 text-sm">
                 {status === "success" ? (
                   <p className="border border-green-200 bg-green-50 px-4 py-3 font-medium text-green-900">
-                    Your request has been received. It isn’t confirmed until the
-                    practice contacts you.
+                    Your request has been received. Once confirmed, DHC will contact you.
                   </p>
                 ) : null}
                 {status === "error" && !topicsMissing ? (
                   <p className="border border-burgundy/15 bg-[#fcf1f1] px-4 py-3 text-burgundy-dark">
                     {topicsMissing
                       ? "Please select at least one topic."
-                      : "We couldn’t send your request just now. Please try again or email "}
+                      : "We couldn’t send your request now. Please try again or email "}
                     {!topicsMissing ? (
                       <a
                         className="underline"
