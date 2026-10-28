@@ -35,7 +35,7 @@ export function DiscoveryCall() {
       callbackWindow: String(formData.get("callbackWindow") ?? ""),
       whatsappReady: formData.get("whatsappReady") === "on",
       consent: formData.get("consent") === "on",
-      companyWebsite: String(formData.get("companyWebsite") ?? ""),
+      validationField: String(formData.get("validationField") ?? ""),
     };
 
     if (payload.topics.length === 0) {
@@ -344,12 +344,13 @@ export function DiscoveryCall() {
                 className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
               >
                 <label>
-                  Website
+                  Additional information
                   <input
-                    name="companyWebsite"
+                    name="validationField"
                     type="text"
                     tabIndex={-1}
                     autoComplete="off"
+                    readOnly
                   />
                 </label>
               </div>
