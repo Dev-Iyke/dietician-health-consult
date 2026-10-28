@@ -94,20 +94,94 @@ if (!isset($callbackWindows[$callbackWindow]) || !$consent) {
     respond(422, ['error' => 'Please confirm the callback window and read the notice.']);
 }
 
-$topicText = count($topics) > 0 ? implode("\n- ", $topics) : 'No topics selected';
 $contactMethod = $region === 'canada' ? 'Phone call (Canadian number)' : 'WhatsApp message or call';
+$escape = static fn (string $value): string => htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$safeName = $escape($name);
+$safePhone = $escape($phone);
+$safeWindow = $escape($callbackWindows[$callbackWindow]);
+$safeContactMethod = $escape($contactMethod);
+$phoneLink = preg_replace('/[^0-9+]/', '', $phone) ?? '';
+$whatsAppNumber = preg_replace('/\D/', '', $phone) ?? '';
+$topicsHtml = '';
+$topicsText = [];
+
+foreach ($topics as $topic) {
+    $safeTopic = $escape($topic);
+    $topicsHtml .= '<li style="margin:0 0 8px;padding:10px 12px;background:#fbf6f3;border:1px solid #f0e6e1;color:#44383a;">' . $safeTopic . '</li>';
+    $topicsText[] = '- ' . $topic;
+}
+
+$contactAction = $region === 'canada'
+    ? '<a href="tel:' . $escape($phoneLink) . '" style="display:inline-block;padding:12px 18px;background:#830b38;color:#ffffff;text-decoration:none;font-weight:bold;">Call ' . $safeName . '</a>'
+    : '<a href="https://wa.me/' . $escape($whatsAppNumber) . '" style="display:inline-block;padding:12px 18px;background:#830b38;color:#ffffff;text-decoration:none;font-weight:bold;">Open WhatsApp chat</a>';
+
+$htmlBody = '<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>New discovery-call request</title>
+</head>
+<body style="margin:0;padding:24px 12px;background:#f5f1ee;font-family:Arial,Helvetica,sans-serif;color:#342b2e;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">A new callback request is waiting for your review.</div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #eadfe2;">
+    <tr>
+      <td style="padding:28px 32px;background:#4b1028;color:#ffffff;">
+        <p style="margin:0 0 8px;color:#efd8df;font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;">Dietitian Health Consult</p>
+        <h1 style="margin:0;font-family:Georgia,\'Times New Roman\',serif;font-size:28px;line-height:1.2;font-weight:normal;">New discovery-call request</h1>
+        <p style="margin:10px 0 0;color:#f4e9ed;font-size:14px;line-height:1.5;">A prospective client has requested a complimentary callback.</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:28px 32px 12px;">
+        <p style="margin:0 0 8px;color:#75676b;font-size:12px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;">Preferred callback window</p>
+        <p style="margin:0;padding:14px 16px;background:#fbf6f3;border-left:4px solid #830b38;color:#4b1028;font-size:18px;font-weight:bold;">' . $safeWindow . '</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:16px 32px 8px;">
+        <h2 style="margin:0 0 12px;color:#4b1028;font-family:Georgia,\'Times New Roman\',serif;font-size:20px;font-weight:normal;">Contact details</h2>
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;">
+          <tr><td style="width:38%;padding:10px 0;border-bottom:1px solid #eee7e8;color:#75676b;font-size:13px;">Name</td><td style="padding:10px 0;border-bottom:1px solid #eee7e8;color:#342b2e;font-size:14px;font-weight:bold;">' . $safeName . '</td></tr>
+          <tr><td style="padding:10px 0;border-bottom:1px solid #eee7e8;color:#75676b;font-size:13px;">Phone</td><td style="padding:10px 0;border-bottom:1px solid #eee7e8;font-size:14px;"><a href="tel:' . $escape($phoneLink) . '" style="color:#830b38;text-decoration:underline;">' . $safePhone . '</a></td></tr>
+          <tr><td style="padding:10px 0;border-bottom:1px solid #eee7e8;color:#75676b;font-size:13px;">Number type</td><td style="padding:10px 0;border-bottom:1px solid #eee7e8;color:#342b2e;font-size:14px;">' . ($region === 'canada' ? 'Canadian' : 'International') . '</td></tr>
+          <tr><td style="padding:10px 0;color:#75676b;font-size:13px;">Contact method</td><td style="padding:10px 0;color:#342b2e;font-size:14px;">' . $safeContactMethod . '</td></tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:18px 32px 8px;">
+        <h2 style="margin:0 0 12px;color:#4b1028;font-family:Georgia,\'Times New Roman\',serif;font-size:20px;font-weight:normal;">They would like to ask about</h2>
+        <ul style="margin:0;padding:0;list-style:none;">' . $topicsHtml . '</ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:22px 32px 30px;">' . $contactAction . '</td>
+    </tr>
+    <tr>
+      <td style="padding:18px 32px;background:#faf7f5;border-top:1px solid #eee7e8;color:#75676b;font-size:12px;line-height:1.6;">
+        This is a callback request, not a confirmed appointment. The visitor was asked not to include medical or health details.
+      </td>
+    </tr>
+  </table>
+</body>
+</html>';
+
 $body = implode("\n", [
-    'New free discovery-call request - Dietitian Health Consult',
+    'New discovery-call request - Dietitian Health Consult',
     '',
+    'Preferred callback window: ' . $callbackWindows[$callbackWindow],
+    '',
+    'Contact details',
     'Name: ' . $name,
     'Phone: ' . $phone,
-    'Number region: ' . ($region === 'canada' ? 'Canada' : 'International'),
+    'Number type: ' . ($region === 'canada' ? 'Canadian' : 'International'),
     'Preferred contact method: ' . $contactMethod,
-    'Preferred callback window: ' . $callbackWindows[$callbackWindow],
-    'General topics:',
-    '- ' . $topicText,
     '',
-    'The visitor confirmed the collection notice and did not submit medical details.',
+    'General topics:',
+    implode("\n", $topicsText),
+    '',
+    'This is a callback request, not a confirmed appointment. The visitor was asked not to include medical or health details.',
 ]);
 
 $configPath = dirname(__DIR__, 2) . '/dhc-mail-config.php';
@@ -134,8 +208,10 @@ try {
     $mailer->CharSet = 'UTF-8';
     $mailer->setFrom((string) $mailConfig['username'], 'Dietitian Health Consult');
     $mailer->addAddress('info@dietitianhealthconsult.com');
-    $mailer->Subject = 'New free discovery-call request';
-    $mailer->Body = $body;
+    $mailer->isHTML(true);
+    $mailer->Subject = 'New discovery-call request';
+    $mailer->Body = $htmlBody;
+    $mailer->AltBody = $body;
     $mailer->send();
 } catch (Throwable $error) {
     error_log('DHC discovery request: authenticated SMTP send failed.');
