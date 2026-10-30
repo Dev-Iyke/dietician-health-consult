@@ -1,15 +1,127 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { ArrowRight, CalendarDays, Clock3, PhoneCall } from "lucide-react";
 import { FadeIn } from "@/components/fade-in";
 import { siteContent } from "@/content/site";
 
 const contactTopics = siteContent.discoveryCall.topics;
+const EDMONTON_TIME_ZONE = "America/Edmonton";
+
+type CallbackWindow = (typeof siteContent.discoveryCall.callbackWindows)[number];
+
+function getZonedParts(date: Date, timeZone: string) {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(date);
+  const value = (type: string) => Number(parts.find((part) => part.type === type)?.value);
+
+  return {
+    year: value("year"),
+    month: value("month"),
+    day: value("day"),
+    hour: value("hour"),
+    minute: value("minute"),
+  };
+}
+
+function zonedWallTimeToDate(
+  year: number,
+  month: number,
+  day: number,
+  hour: number,
+  timeZone: string,
+) {
+  const targetUtc = Date.UTC(year, month - 1, day, hour);
+  let timestamp = targetUtc;
+
+  // Find the UTC instant that corresponds to this Edmonton wall-clock time.
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const parts = getZonedParts(new Date(timestamp), timeZone);
+    const representedUtc = Date.UTC(
+      parts.year,
+      parts.month - 1,
+      parts.day,
+      parts.hour,
+      parts.minute,
+    );
+    const adjustment = targetUtc - representedUtc;
+    timestamp += adjustment;
+    if (adjustment === 0) break;
+  }
+
+  return new Date(timestamp);
+}
+
+function getUpcomingWindowDate(window: CallbackWindow, now: Date) {
+  const today = getZonedParts(now, EDMONTON_TIME_ZONE);
+  const todayUtc = Date.UTC(today.year, today.month - 1, today.day);
+  const currentDayOfWeek = new Date(todayUtc).getUTCDay();
+  let daysUntilWindow = (window.dayOfWeek - currentDayOfWeek + 7) % 7;
+  let windowDate = new Date(todayUtc + daysUntilWindow * 24 * 60 * 60 * 1000);
+
+  let start = zonedWallTimeToDate(
+    windowDate.getUTCFullYear(),
+    windowDate.getUTCMonth() + 1,
+    windowDate.getUTCDate(),
+    window.startHour,
+    EDMONTON_TIME_ZONE,
+  );
+  let end = zonedWallTimeToDate(
+    windowDate.getUTCFullYear(),
+    windowDate.getUTCMonth() + 1,
+    windowDate.getUTCDate(),
+    window.endHour,
+    EDMONTON_TIME_ZONE,
+  );
+
+  if (daysUntilWindow === 0 && end <= now) {
+    daysUntilWindow += 7;
+    windowDate = new Date(todayUtc + daysUntilWindow * 24 * 60 * 60 * 1000);
+    start = zonedWallTimeToDate(
+      windowDate.getUTCFullYear(),
+      windowDate.getUTCMonth() + 1,
+      windowDate.getUTCDate(),
+      window.startHour,
+      EDMONTON_TIME_ZONE,
+    );
+    end = zonedWallTimeToDate(
+      windowDate.getUTCFullYear(),
+      windowDate.getUTCMonth() + 1,
+      windowDate.getUTCDate(),
+      window.endHour,
+      EDMONTON_TIME_ZONE,
+    );
+  }
+
+  return { start, end };
+}
+
+function getLocalWindowLabel(window: CallbackWindow, timeZone: string) {
+  const { start, end } = getUpcomingWindowDate(window, new Date());
+  const weekdayFormatter = new Intl.DateTimeFormat(undefined, {
+    timeZone,
+    weekday: "long",
+  });
+  const timeFormatter = new Intl.DateTimeFormat(undefined, {
+    timeZone,
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  return `${weekdayFormatter.format(start)} ${timeFormatter.format(start)} – ${timeFormatter.format(end)}`;
+}
 
 type SubmissionState = "idle" | "sending" | "success" | "error";
 
 export function DiscoveryCall() {
+  const [localWindowLabels, setLocalWindowLabels] = useState<Record<string, string> | null>(null);
   const [numberRegion, setNumberRegion] = useState<"canada" | "international" | "">("");
   const [whatsappReady, setWhatsappReady] = useState(false);
   const [consentGiven, setConsentGiven] = useState(false);
@@ -19,6 +131,23 @@ export function DiscoveryCall() {
     consentGiven &&
     (numberRegion === "canada" ||
       (numberRegion === "international" && whatsappReady));
+
+  useEffect(() => {
+    const localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (!localTimeZone || localTimeZone === EDMONTON_TIME_ZONE) return;
+
+    try {
+      const labels = Object.fromEntries(
+        siteContent.discoveryCall.callbackWindows.map((window) => [
+          window.value,
+          getLocalWindowLabel(window, localTimeZone),
+        ]),
+      );
+      setLocalWindowLabels(labels);
+    } catch {
+      // Keep the Edmonton labels if the browser does not support this timezone.
+    }
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -118,7 +247,16 @@ export function DiscoveryCall() {
                     <dd>
                       <ul className="mt-1 space-y-1 text-sm leading-6 sm:text-base">
                         {siteContent.discoveryCall.callbackWindows.map((window) => (
-                          <li key={window.value}>{window.label}</li>
+                          <li key={window.value}>
+                            <span className="block">
+                              {localWindowLabels?.[window.value] ?? window.label}
+                            </span>
+                            {localWindowLabels ? (
+                              <span className="block text-xs text-white/60">
+                                Edmonton: {window.label.replace(" (Edmonton time)", "")}
+                              </span>
+                            ) : null}
+                          </li>
                         ))}
                       </ul>
                     </dd>
@@ -283,6 +421,9 @@ export function DiscoveryCall() {
                 <legend className="text-sm font-medium text-burgundy-dark">
                   Preferred callback window
                 </legend>
+                <p className="mt-1 text-xs leading-5 text-stone-500">
+                  Times are anchored to Edmonton; your local equivalent is shown where available.
+                </p>
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                   {siteContent.discoveryCall.callbackWindows.map((window) => (
                     <label
@@ -296,7 +437,16 @@ export function DiscoveryCall() {
                         required
                         className="size-4 shrink-0 accent-burgundy"
                       />
-                      {window.label}
+                      <span className="min-w-0">
+                        <span className="block font-medium text-burgundy-dark">
+                          {localWindowLabels?.[window.value] ?? window.label}
+                        </span>
+                        {localWindowLabels ? (
+                          <span className="mt-1 block text-xs text-stone-500">
+                            Edmonton: {window.label.replace(" (Edmonton time)", "")}
+                          </span>
+                        ) : null}
+                      </span>
                     </label>
                   ))}
                 </div>

@@ -183,9 +183,27 @@ export const siteContent = {
       "General questions about nutrition services",
     ],
     callbackWindows: [
-      { value: "sat_2_4", label: "Saturday, 2-4 p.m. (Edmonton time)" },
-      { value: "sat_7_9", label: "Saturday, 7-9 p.m. (Edmonton time)" },
-      { value: "sun_5_7", label: "Sunday, 5-7 p.m. (Edmonton time)" },
+      {
+        value: "sat_2_4",
+        label: "Saturday, 2-4 p.m. (Edmonton time)",
+        dayOfWeek: 6,
+        startHour: 14,
+        endHour: 16,
+      },
+      {
+        value: "sat_7_9",
+        label: "Saturday, 7-9 p.m. (Edmonton time)",
+        dayOfWeek: 6,
+        startHour: 19,
+        endHour: 21,
+      },
+      {
+        value: "sun_5_7",
+        label: "Sunday, 5-7 p.m. (Edmonton time)",
+        dayOfWeek: 0,
+        startHour: 17,
+        endHour: 19,
+      },
     ],
   },
   oneOffServices: [
