@@ -19,7 +19,7 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-20 border-b border-burgundy/10 bg-cream/95 backdrop-blur-md">
+    <header className="sticky top-0 z-20 border-b border-burgundy/10 bg-cream shadow-[0_8px_24px_-20px_rgba(75,16,40,0.55)] backdrop-blur-md">
       <div className="relative mx-auto grid min-h-[70px] w-[calc(100%-2rem)] max-w-[1320px] grid-cols-[1fr_auto] items-center md:min-h-[82px] md:w-[calc(100%-4rem)] md:grid-cols-[1fr_auto_1fr]">
         <BrandLink />
 
@@ -32,7 +32,7 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="py-3 text-sm text-stone-700 transition-[color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:text-burgundy hover:underline focus-visible:text-burgundy motion-reduce:transform-none motion-reduce:transition-none md:py-0 md:text-sm"
+              className="py-3 text-sm font-medium text-burgundy-dark transition-[color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:text-burgundy hover:underline focus-visible:text-burgundy motion-reduce:transform-none motion-reduce:transition-none md:py-0 md:text-sm"
               onClick={() => setMenuOpen(false)}
             >
               {link.label}

@@ -14,17 +14,29 @@ import { siteContent } from "@/content/site";
 const areaIcons: LucideIcon[] = [Activity, HeartPulse, Leaf, Sparkles];
 const serviceImages = [
   {
-    src: "/images/stock/balanced-home-meal.webp",
+    src: "/images/stock/wooden-table-covered-with-various-food.webp",
     alt: "Colorful home-cooked meals with vegetables, greens, and a variety of ingredients",
   },
+  // {
+  //   src: "/images/stock/balanced-home-meal.webp",
+  //   alt: "Colorful home-cooked meals with vegetables, greens, and a variety of ingredients",
+  // },
   {
-    src: "/images/stock/registered-dietitian-counselling.webp",
+    src: "/images/stock/side-view-doctor-talking-patient.webp",
     alt: "A dietitian having a warm, collaborative nutrition conversation with a client",
   },
+  // {
+  //   src: "/images/stock/registered-dietitian-counselling.webp",
+  //   alt: "A dietitian having a warm, collaborative nutrition conversation with a client",
+  // },
   {
-    src: "/images/stock/meals-and-notebook.webp",
+    src: "/images/stock/top-view-table-full-delicious-food-assortment.webp",
     alt: "An open meal-planning notebook beside fresh salad and ingredients",
   },
+  // {
+  //   src: "/images/stock/meals-and-notebook.webp",
+  //   alt: "An open meal-planning notebook beside fresh salad and ingredients",
+  // },
 ];
 const areaLayouts = [
   "lg:col-span-7",
